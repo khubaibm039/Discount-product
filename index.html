@@ -128,39 +128,30 @@
       </section>
     </main>
    <script>
-    let clickCount = 0;
-    const originalPrices = {}; // Store original prices
+  const originalPrice1 = parseFloat(document.getElementById("shoePrice1").innerText);
 
-    function getDiscountValue(priceId1, parcentage) {
-      const priceText = document.getElementById(priceId1);
-      const priceAmount = parseFloat(priceText.innerText);
+  function getDiscountValue(priceId, percentage) {
+    const priceText = document.getElementById(priceId);
+    const priceAmount = parseFloat(priceText.innerText);
+    const discountPrice = priceAmount - (percentage / 100) * priceAmount;
 
-      // Store the original price when it's not already stored
-      if (!(priceId1 in originalPrices)) {
-        originalPrices[priceId1] = priceAmount;
-      }
-
-      const discountPrice = priceAmount - (parcentage / 100) * priceAmount;
-
-      if (clickCount % 2 === 0) {
-        priceText.innerText = discountPrice.toFixed(2);
-      } else {
-        // Reset the price to its original value on double-click
-        priceText.innerText = originalPrices[priceId1].toFixed(2);
-      }
-
-      clickCount++;
+    if (priceAmount === discountPrice) {
+      // If the price is already discounted, reset it to the original price
+      priceText.innerText = originalPrice1.toFixed(2);
+    } else {
+      // Apply the discount
+      priceText.innerText = discountPrice.toFixed(2);
     }
+  }
 
-    document.getElementById("discount-btn1").addEventListener("click", function () {
-      getDiscountValue("shoePrice1", 30);
-    });
+  document.getElementById("discount-btn1").addEventListener("click", function () {
+    getDiscountValue("shoePrice1", 30);
+  });
 
-    // Handle double-click on the discountPrice element
-    document.getElementById("shoePrice1").addEventListener("dblclick", function () {
-      // Reset the price to its original value
-      this.innerText = originalPrices["shoePrice1"].toFixed(2);
-    });
-  </script>
+  document.getElementById("shoePrice1").addEventListener("dblclick", function () {
+    // Double-clicking resets the price to its original value
+    this.innerText = originalPrice1.toFixed(2);
+  });
+</script>
   </body>
 </html>
